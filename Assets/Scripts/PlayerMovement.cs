@@ -32,6 +32,21 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		InputHandler();
+	}
+
+	// gets called independently from the framerate and is based on the physics
+	void FixedUpdate ()
+	{
+		//adds in a physics force onto the player to make them move around but also clampin ghte velocity so they dont just gain infinite speed
+		body.AddForce(inputVector * runSpeed);
+
+		body.velocity = Vector3.ClampMagnitude(body.velocity, maxVelocity);
+	}
+
+	void InputHandler()
+	{
+		/////////axis movement//////////
 		inputVector = new Vector3
 		(
 				Input.GetAxisRaw("Horizontal"),
@@ -40,12 +55,7 @@ public class PlayerMovement : MonoBehaviour
 		);
 
 		inputVector = Vector3.Normalize(inputVector);
-	}
 
-	void FixedUpdate ()
-	{
-		body.AddForce(inputVector * runSpeed);
-
-		body.velocity = Vector3.ClampMagnitude(body.velocity, maxVelocity);
+		/////////////jump//////////////
 	}
 }
