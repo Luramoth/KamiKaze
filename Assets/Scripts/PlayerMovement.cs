@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
 	// gets called independently from the framerate and is based on the physics
 	void FixedUpdate ()
 	{
-		//adds in a physics force onto the player to make them move around but also clampin ghte velocity so they dont just gain infinite speed
+		//adds in a physics force onto the player to make them move around but also clamping the velocity so they don't just gain infinite speed
 		body.AddForce(inputVector * runSpeed);
 
 		body.velocity = Vector3.ClampMagnitude(body.velocity, maxVelocity);
