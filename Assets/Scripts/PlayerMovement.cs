@@ -10,8 +10,17 @@ using UnityEngine;
     You should have received a copy of the GNU Affero General Public License along with Foobar. If not, see <https://www.gnu.org/licenses/agpl-3.0.html>.
 */
 
-public class PlayerMovment : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
+	//vars
+	private Vector3 inputVector;
+
+	private float maxVelocity;
+
+	public float walkSpeed = 20f;
+	public float runSpeed = 35f;
+
+
 	// Start is called before the first frame update
 	void Start()
 	{
