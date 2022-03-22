@@ -12,50 +12,15 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-	//vars
-	private Vector3 inputVector;
-
-	private float maxVelocity = 10f;
-
-	public float walkSpeed = 20f;
-	public float runSpeed = 35f;
-
-	//objects
-	private Rigidbody body;
-
 	// Start is called before the first frame update
 	void Start()
 	{
-		body = gameObject.GetComponent<Rigidbody>();
+
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		InputHandler();
-	}
 
-	// gets called independently from the framerate and is based on the physics
-	void FixedUpdate ()
-	{
-		//adds in a physics force onto the player to make them move around but also clamping the velocity so they don't just gain infinite speed
-		body.AddForce(inputVector * runSpeed);
-
-		body.velocity = Vector3.ClampMagnitude(body.velocity, maxVelocity);
-	}
-
-	void InputHandler()
-	{
-		/////////axis movement//////////
-		inputVector = new Vector3
-		(
-				Input.GetAxisRaw("Horizontal"),
-				0,
-				Input.GetAxisRaw("Vertical")
-		);
-
-		inputVector = Vector3.Normalize(inputVector);
-
-		/////////////jump//////////////
 	}
 }
