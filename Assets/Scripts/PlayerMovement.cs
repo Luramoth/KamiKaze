@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /*
@@ -12,30 +10,47 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-  // Vars
 
-  private Vector3 inputAxis;
+	//vars
+	[Header("Basic movement stuff")]
+	public float speed = 6f;
 
-  public CharacterController charCont;
+	[Header("Advanced tweaks")]
+	public float turnSmoothSpeed = 0.1f;
 
-	// Start is called before the first frame update
-	void Start()
-	{
-    
-	}
+	private float turnSmoothVel;
+
+	//Objects
+	[Header("References")]
+	public CharacterController controller;
 
 	// Update is called once per frame
 	void Update()
 	{
-
+		InputHandler();
 	}
 
-  void InputHandler()
-  {
-inputAxis = new Vector3(
-      Input.GetAxisRaw("Horizontal"),
-      0,
-      Input.GetAxisRaw("Vertical")
-        );
-  }
+	//simple system to handle player input
+	void InputHandler()
+	{
+		//gather axis movements
+		Vector3 inputAxis = new Vector3
+		(
+			Input.GetAxisRaw("Horizontal"),
+			0f,
+			Input.GetAxisRaw("Vertical")
+		).normalized;
+
+		//apply movements if input is detected
+		if (inputAxis.magnitude >= 0.1f)
+		{
+			// based ont he players movement direction, try to rotate the player model to match it
+			float targetAngle = Mathf.Atan2(inputAxis.x,inputAxis.z) * Mathf.Rad2Deg;
+			float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVel, turnSmoothSpeed);
+			transform.rotation = Quaternion.Euler(0f,angle,0f);
+
+			// move the player
+			controller.Move(inputAxis * speed * Time.deltaTime);
+		}
+	}
 }
