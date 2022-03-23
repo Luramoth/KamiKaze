@@ -12,10 +12,16 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+  // Vars
+
+  private Vector3 inputAxis;
+
+  public CharacterController charCont;
+
 	// Start is called before the first frame update
 	void Start()
 	{
-
+    
 	}
 
 	// Update is called once per frame
@@ -23,4 +29,13 @@ public class PlayerMovement : MonoBehaviour
 	{
 
 	}
+
+  void InputHandler()
+  {
+inputAxis = new Vector3(
+      Input.GetAxisRaw("Horizontal"),
+      0,
+      Input.GetAxisRaw("Vertical")
+        );
+  }
 }
