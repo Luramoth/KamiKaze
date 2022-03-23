@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
 	//Objects
 	[Header("References")]
 	public CharacterController controller;
+	public Transform cam;
 
 	// Update is called once per frame
 	void Update()
@@ -45,12 +46,13 @@ public class PlayerMovement : MonoBehaviour
 		if (inputAxis.magnitude >= 0.1f)
 		{
 			// based ont he players movement direction, try to rotate the player model to match it
-			float targetAngle = Mathf.Atan2(inputAxis.x,inputAxis.z) * Mathf.Rad2Deg;
-			float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVel, turnSmoothSpeed);
-			transform.rotation = Quaternion.Euler(0f,angle,0f);
+			float targetAngle = Mathf.Atan2(inputAxis.x,inputAxis.z) * Mathf.Rad2Deg + cam.eulerAngles.y; //this find the target angle the player should be facing in
+			float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVel, turnSmoothSpeed);// the creates a variable tomake sure the transition is smooth when switching angles
+			transform.rotation = Quaternion.Euler(0f,angle,0f); // the applies the angle
 
 			// move the player
-			controller.Move(inputAxis * speed * Time.deltaTime);
+			Vector3 moveDir = Quaternion.Euler(0f,targetAngle,0f) * Vector3.forward; // this will take the current directiont he camera is facing
+			controller.Move(moveDir.normalized * speed * Time.deltaTime);// this uses the direction the camera is facing in order to move forward
 		}
 	}
 }
