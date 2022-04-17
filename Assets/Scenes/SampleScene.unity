@@ -384,11 +384,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2213940530983001665, guid: 5159dbc7c614bd9eaaa1a19c9b8d3107, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000002237396
+      value: -0.00000002237396
       objectReference: {fileID: 0}
     - target: {fileID: 2213940530983001665, guid: 5159dbc7c614bd9eaaa1a19c9b8d3107, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -4.2483692e-10
+      value: 4.2483692e-10
       objectReference: {fileID: 0}
     - target: {fileID: 2213940531005312180, guid: 5159dbc7c614bd9eaaa1a19c9b8d3107, type: 3}
       propertyPath: m_LocalPosition.y
@@ -420,15 +420,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2213940531134461867, guid: 5159dbc7c614bd9eaaa1a19c9b8d3107, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.22104906
+      value: 0.22104904
       objectReference: {fileID: 0}
     - target: {fileID: 2213940531134461867, guid: 5159dbc7c614bd9eaaa1a19c9b8d3107, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000025464413
+      value: 0.000000003855031
       objectReference: {fileID: 0}
     - target: {fileID: 2213940531134461867, guid: 5159dbc7c614bd9eaaa1a19c9b8d3107, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000005771659
+      value: -8.7376506e-10
       objectReference: {fileID: 0}
     - target: {fileID: 2213940531373895901, guid: 5159dbc7c614bd9eaaa1a19c9b8d3107, type: 3}
       propertyPath: m_LocalPosition.z
@@ -444,11 +444,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2213940531373895901, guid: 5159dbc7c614bd9eaaa1a19c9b8d3107, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000018681206
+      value: -0.000000018681206
       objectReference: {fileID: 0}
     - target: {fileID: 2213940531373895901, guid: 5159dbc7c614bd9eaaa1a19c9b8d3107, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000045920507
+      value: 0.0000000045920507
       objectReference: {fileID: 0}
     - target: {fileID: 2213940531541094939, guid: 5159dbc7c614bd9eaaa1a19c9b8d3107, type: 3}
       propertyPath: m_LocalPosition.z
@@ -472,3 +472,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5159dbc7c614bd9eaaa1a19c9b8d3107, type: 3}
+--- !u!1 &2213940531375764278 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2213940529715338843, guid: 5159dbc7c614bd9eaaa1a19c9b8d3107, type: 3}
+  m_PrefabInstance: {fileID: 2213940531375764277}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2213940531375764279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2213940531375764278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 7e59879d46a7cd0c0899c7884519c063, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}

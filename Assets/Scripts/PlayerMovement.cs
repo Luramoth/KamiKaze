@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /*
     This file is part of Microda.
@@ -34,20 +35,15 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		InputHandler();
+		//InputHandler();
 	}
 
 	//simple system to handle player input
-	void InputHandler()
+	void InputHandler(InputValue inputAxis)
 	{
 		/////Basic movements/////
 		//gather axis movements
-		Vector3 inputAxis = new Vector3
-		(
-			Input.GetAxisRaw("Horizontal"),
-			0f,
-			Input.GetAxisRaw("Vertical")
-		).normalized;
+
 
 		//apply movements if input is detected
 		if (inputAxis.magnitude >= 0.1f)
@@ -64,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
 
 		if (Input.GetButtonDown("Jump"))
 		{
-
+			
 		}
 
 		/////extra inputs/////
