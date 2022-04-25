@@ -15,10 +15,10 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public partial class @PlayerInput : IInputActionCollection2, IDisposable
+public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
 {
     public InputActionAsset asset { get; }
-    public @PlayerInput()
+    public @PlayerInputActions()
     {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""PlayerInput"",
@@ -85,8 +85,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""name"": ""MouseLook"",
                     ""type"": ""Value"",
                     ""id"": ""3456837e-bc47-4cdd-91e1-ee81495190cb"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
+                    ""expectedControlType"": """",
+                    ""processors"": ""NormalizeVector2"",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 }
@@ -270,8 +270,19 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ec674cda-ba2d-4aa2-8b64-2dbf178ff2fb"",
-                    ""path"": ""<Mouse>/position"",
+                    ""id"": ""34929e10-eef5-488d-a71f-f6606d8d3eb1"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""MouseLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eaabdd54-73bd-42af-8af7-92904c300453"",
+                    ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
@@ -389,8 +400,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_characterControls_MouseLook;
     public struct CharacterControlsActions
     {
-        private @PlayerInput m_Wrapper;
-        public CharacterControlsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        private @PlayerInputActions m_Wrapper;
+        public CharacterControlsActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_characterControls_Move;
         public InputAction @Run => m_Wrapper.m_characterControls_Run;
         public InputAction @Jump => m_Wrapper.m_characterControls_Jump;
