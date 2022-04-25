@@ -1,6 +1,6 @@
 {
 	"editor.bracketPairColorization.enabled": true,
-	//"editor.guides.bracketPairs":"active",
+	"editor.guides.bracketPairs":"active",
 
 	// Configure glob patterns for excluding files and folders.
 	"files.exclude": {

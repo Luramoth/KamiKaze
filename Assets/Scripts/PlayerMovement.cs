@@ -12,9 +12,9 @@ using UnityEngine.InputSystem;
 ///TODO: revamp controller system to use unity's new input system
 ///TODO: add jump mechanic
 
-public class PlayerMovement : MonoBehaviour
-{
 
+public class PlayerMovement : MonoBehaviour 
+{
 	//vars
 	[Header("Basic movement stuff")]
 	public float speed = 6f;
@@ -38,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
 		//InputHandler();
 	}
 
+
+
 	//simple system to handle player input
 	void InputHandler(InputValue inputAxis)
 	{
@@ -46,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 		//apply movements if input is detected
-		if (inputAxis.magnitude >= 0.1f)
+		/* if (inputAxis.magnitude >= 0.1f)
 		{
 			// based ont he players movement direction, try to rotate the player model to match it
 			float targetAngle = Mathf.Atan2(inputAxis.x,inputAxis.z) * Mathf.Rad2Deg + cam.eulerAngles.y; //this find the target angle the player should be facing in
@@ -56,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
 			// move the player
 			Vector3 moveDir = Quaternion.Euler(0f,targetAngle,0f) * Vector3.forward; // this will take the current direction the camera is facing
 			controller.Move(moveDir.normalized * speed * Time.deltaTime);// this uses the direction the camera is facing in order to move forward
-		}
+		} */
 
 		if (Input.GetButtonDown("Jump"))
 		{

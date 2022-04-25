@@ -80,6 +80,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseLook"",
+                    ""type"": ""Value"",
+                    ""id"": ""3456837e-bc47-4cdd-91e1-ee81495190cb"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -97,9 +106,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""WASD"",
                     ""id"": ""e01cd5e6-92f6-40b8-ad6d-24e2bbe8e79a"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""2DVector(mode=1)"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""NormalizeVector2"",
                     ""groups"": """",
                     ""action"": ""Move"",
                     ""isComposite"": true,
@@ -258,6 +267,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""SecondaryFire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ec674cda-ba2d-4aa2-8b64-2dbf178ff2fb"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""MouseLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -300,6 +320,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_characterControls_UnlockCursor = m_characterControls.FindAction("UnlockCursor", throwIfNotFound: true);
         m_characterControls_Fire = m_characterControls.FindAction("Fire", throwIfNotFound: true);
         m_characterControls_SecondaryFire = m_characterControls.FindAction("SecondaryFire", throwIfNotFound: true);
+        m_characterControls_MouseLook = m_characterControls.FindAction("MouseLook", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -365,6 +386,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_characterControls_UnlockCursor;
     private readonly InputAction m_characterControls_Fire;
     private readonly InputAction m_characterControls_SecondaryFire;
+    private readonly InputAction m_characterControls_MouseLook;
     public struct CharacterControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -375,6 +397,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @UnlockCursor => m_Wrapper.m_characterControls_UnlockCursor;
         public InputAction @Fire => m_Wrapper.m_characterControls_Fire;
         public InputAction @SecondaryFire => m_Wrapper.m_characterControls_SecondaryFire;
+        public InputAction @MouseLook => m_Wrapper.m_characterControls_MouseLook;
         public InputActionMap Get() { return m_Wrapper.m_characterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -402,6 +425,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @SecondaryFire.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnSecondaryFire;
                 @SecondaryFire.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnSecondaryFire;
                 @SecondaryFire.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnSecondaryFire;
+                @MouseLook.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnMouseLook;
+                @MouseLook.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnMouseLook;
+                @MouseLook.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnMouseLook;
             }
             m_Wrapper.m_CharacterControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -424,6 +450,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @SecondaryFire.started += instance.OnSecondaryFire;
                 @SecondaryFire.performed += instance.OnSecondaryFire;
                 @SecondaryFire.canceled += instance.OnSecondaryFire;
+                @MouseLook.started += instance.OnMouseLook;
+                @MouseLook.performed += instance.OnMouseLook;
+                @MouseLook.canceled += instance.OnMouseLook;
             }
         }
     }
@@ -454,5 +483,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnUnlockCursor(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnSecondaryFire(InputAction.CallbackContext context);
+        void OnMouseLook(InputAction.CallbackContext context);
     }
 }

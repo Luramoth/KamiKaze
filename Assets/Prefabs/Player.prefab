@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2213940529715338821}
   - component: {fileID: 2213940529715338842}
-  - component: {fileID: 2213940529715338820}
   - component: {fileID: 5395237608169603884}
+  - component: {fileID: 3711441854108845012}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -54,25 +54,6 @@ CharacterController:
   m_SkinWidth: 0.05
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &2213940529715338820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2213940529715338843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c1d641ecf43d81f6a23b13ebef726f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 6
-  jumpPower: 20
-  gravity: 10
-  turnSmoothSpeed: 0.1
-  cursorLocked: 1
-  controller: {fileID: 2213940529715338842}
-  cam: {fileID: 2213940530983001665}
 --- !u!114 &5395237608169603884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,7 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 7e59879d46a7cd0c0899c7884519c063, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -97,12 +78,71 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3711441854108845012}
+        m_TargetAssemblyTypeName: PlayerControl, Assembly-CSharp
+        m_MethodName: Move
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e5dc8706-f2fa-4ecd-a704-2aff40fd556c
+    m_ActionName: characterControls/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ca90b794-707f-4335-9839-51f84ae74a64
+    m_ActionName: characterControls/Run[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 80018b41-16a5-49c1-971b-57b7c41764b4
+    m_ActionName: characterControls/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4be60155-0fad-4e29-ac77-1e7dedaab0ff
+    m_ActionName: characterControls/UnlockCursor[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5b610710-08ad-4490-8271-98a07eecfa44
+    m_ActionName: characterControls/Fire[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 71dc07b3-d236-4e74-8e16-c6c8105503f0
+    m_ActionName: characterControls/SecondaryFire[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3456837e-bc47-4cdd-91e1-ee81495190cb
+    m_ActionName: characterControls/MouseLook
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 
+  m_DefaultActionMap: characterControls
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 2213940530983001670}
+--- !u!114 &3711441854108845012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2213940529715338843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c86718bfde05020a4b0eec1711fe40ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 6
+  jumpPower: 20
+  gravity: 10
+  turnSmoothSpeed: 0.1
+  cursorLocked: 1
+  controller: {fileID: 2213940529715338842}
+  cam: {fileID: 2213940530983001665}
 --- !u!1 &2213940529896671927
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,6 +605,7 @@ GameObject:
   - component: {fileID: 2213940531005312180}
   - component: {fileID: 2213940531005312183}
   - component: {fileID: 2213940531005312182}
+  - component: {fileID: 3133054019436873081}
   m_Layer: 0
   m_Name: ThirdPerson Camera
   m_TagString: Untagged
@@ -720,6 +761,21 @@ MonoBehaviour:
   m_Damping: 0.6
   m_DampingWhenOccluded: 0.6
   m_OptimalTargetDistance: 0
+--- !u!114 &3133054019436873081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2213940531005312181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb7194dc27b9df64c8beca7482ee8e0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerIndex: -1
+  XYAxis: {fileID: 6031149230189503399, guid: 7e59879d46a7cd0c0899c7884519c063, type: 3}
+  ZAxis: {fileID: 0}
 --- !u!1 &2213940531040535420
 GameObject:
   m_ObjectHideFlags: 0
@@ -870,7 +926,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2213940531134461864}
-  m_LocalRotation: {x: 0.12813938, y: 0.00000000815618, z: -0.000000001053815, w: 0.9917562}
+  m_LocalRotation: {x: 0.12813938, y: 0.000000008532268, z: -0.0000000011024074, w: 0.9917562}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
