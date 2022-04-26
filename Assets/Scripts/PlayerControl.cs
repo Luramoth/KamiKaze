@@ -26,14 +26,12 @@ public class PlayerControl : MonoBehaviour
 
 	private void Awake() {
 		playerInputActions = new PlayerInputActions();
-	}
-
-	private void OnEnable() {
 		playerInputActions.characterControls.Enable();
 	}
 
 	private void OnDisable() {
 		playerInputActions.characterControls.Disable();
+		playerInputActions.Dispose();
 	}
 
 	private void Update() {
@@ -42,10 +40,6 @@ public class PlayerControl : MonoBehaviour
 
 	public void InputHandler(){
 		Vector2 moveDirection = playerInputActions.characterControls.Move.ReadValue<Vector2>();
-
-		Vector2 mouseDirection = playerInputActions.characterControls.MouseLook.ReadValue<Vector2>();
-
-		Debug.Log(mouseDirection);
 
 		if (moveDirection.magnitude >= 0.1f)
 		{
