@@ -85,7 +85,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""name"": ""MouseLook"",
                     ""type"": ""Value"",
                     ""id"": ""3456837e-bc47-4cdd-91e1-ee81495190cb"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": ""NormalizeVector2"",
                     ""interactions"": """",
                     ""initialStateCheck"": true

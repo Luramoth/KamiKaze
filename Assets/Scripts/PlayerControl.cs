@@ -60,13 +60,13 @@ public class PlayerControl : MonoBehaviour
 			controller.Move(moveDir * speed * Time.deltaTime);// this uses the direction the camera is facing in order to move forward
 		}
 
-		/* if (cursorLocked == true)
+		if (cursorLocked == true)
 		{
 			Cursor.lockState = CursorLockMode.Locked;
 		}
 		else
 		{
 			Cursor.lockState = CursorLockMode.None;
-		} */
+		}
 	}
 }
