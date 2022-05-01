@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 /*
     This file is part of KamiKaze.
@@ -9,16 +8,13 @@ using UnityEngine.InputSystem;
     You should have received a copy of the GNU Affero General Public License along with Foobar. If not, see <https://www.gnu.org/licenses/agpl-3.0.html>.
 */
 
-///TODO: revamp controller system to use unity's new input system
-///TODO: add jump mechanic
-
-
-public class PlayerMovement : MonoBehaviour 
+public class PlayerMovement : MonoBehaviour
 {
+
 	//vars
 	[Header("Basic movement stuff")]
 	public float speed = 6f;
-	public float jumpPower = 20f;
+	public float jumpPower = 2f;
 	public float gravity = 10f;
 
 	[Header("Advanced tweaks")]
@@ -35,20 +31,22 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		//InputHandler();
+		InputHandler();
 	}
 
-
-
 	//simple system to handle player input
-	void InputHandler(InputValue inputAxis)
+	void InputHandler()
 	{
-		/////Basic movements/////
 		//gather axis movements
-
+		Vector3 inputAxis = new Vector3
+		(
+			Input.GetAxisRaw("Horizontal"),
+			0f,
+			Input.GetAxisRaw("Vertical")
+		).normalized;
 
 		//apply movements if input is detected
-		/* if (inputAxis.magnitude >= 0.1f)
+		if (inputAxis.magnitude >= 0.1f)
 		{
 			// based ont he players movement direction, try to rotate the player model to match it
 			float targetAngle = Mathf.Atan2(inputAxis.x,inputAxis.z) * Mathf.Rad2Deg + cam.eulerAngles.y; //this find the target angle the player should be facing in
@@ -56,16 +54,10 @@ public class PlayerMovement : MonoBehaviour
 			transform.rotation = Quaternion.Euler(0f,angle,0f); // the applies the angle
 
 			// move the player
-			Vector3 moveDir = Quaternion.Euler(0f,targetAngle,0f) * Vector3.forward; // this will take the current direction the camera is facing
+			Vector3 moveDir = Quaternion.Euler(0f,targetAngle,0f) * Vector3.forward; // this will take the current directiont he camera is facing
 			controller.Move(moveDir.normalized * speed * Time.deltaTime);// this uses the direction the camera is facing in order to move forward
-		} */
-
-		if (Input.GetButtonDown("Jump"))
-		{
-			
 		}
 
-		/////extra inputs/////
 		if (Input.GetKeyDown("escape"))
 		{
 			cursorLocked = !cursorLocked;
