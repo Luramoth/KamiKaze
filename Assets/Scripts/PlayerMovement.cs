@@ -14,14 +14,11 @@ public class PlayerMovement : MonoBehaviour
 	//vars
 	[Header("Basic movement stuff")]
 	public float speed = 6f;
-	public float jumpPower = 2f;
-	public float gravity = 10f;
 
 	[Header("Advanced tweaks")]
 	public float turnSmoothSpeed = 0.1f;
-	public bool cursorLocked = true;
 
-	float turnSmoothVel;
+	private float turnSmoothVel;
 
 	//Objects
 	[Header("References")]
@@ -56,20 +53,6 @@ public class PlayerMovement : MonoBehaviour
 			// move the player
 			Vector3 moveDir = Quaternion.Euler(0f,targetAngle,0f) * Vector3.forward; // this will take the current directiont he camera is facing
 			controller.Move(moveDir.normalized * speed * Time.deltaTime);// this uses the direction the camera is facing in order to move forward
-		}
-
-		if (Input.GetKeyDown("escape"))
-		{
-			cursorLocked = !cursorLocked;
-		}
-
-		if (cursorLocked == true)
-		{
-			Cursor.lockState = CursorLockMode.Locked;
-		}
-		else
-		{
-			Cursor.lockState = CursorLockMode.None;
 		}
 	}
 }
