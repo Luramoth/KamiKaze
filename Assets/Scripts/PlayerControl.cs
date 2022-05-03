@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,12 +18,13 @@ public class PlayerControl : MonoBehaviour
 	public float speed = 6f;
     public float jumpPower = 6f;
 
+     public bool mouseLock = true;
+
 	[Header("Advanced tweaks")]
 	public float turnSmoothSpeed = 0.1f;
 
 	private float turnSmoothVel;
 
-    private bool mouseLock = true;
 
 	//Objects
 	[Header("References")]
@@ -59,11 +61,18 @@ public class PlayerControl : MonoBehaviour
 			controller.Move(moveDir.normalized * speed * Time.deltaTime);// this uses the direction the camera is facing in order to move forward
 		}
 
-        if (Input.GetKeyDown("cancel"))
+        if (Input.GetKeyDown("escape"))
         {
             mouseLock = !mouseLock;
         }
 
-        
+        if (mouseLock == true)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
 	}
 }
