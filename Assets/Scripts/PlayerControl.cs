@@ -1,29 +1,28 @@
-using System.Reflection;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /*
-    This file is part of KamiKaze.
+	This file is part of KamiKaze.
 
-    KamiKaze is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-    KamiKaze is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
-    You should have received a copy of the GNU Affero General Public License along with Foobar. If not, see <https://www.gnu.org/licenses/agpl-3.0.html>.
+	KamiKaze is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+	KamiKaze is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+	You should have received a copy of the GNU Affero General Public License along with Foobar. If not, see <https://www.gnu.org/licenses/agpl-3.0.html>.
 */
 
 public class PlayerControl : MonoBehaviour
 {
-    //vars
+	//vars
 	[Header("Basic movement stuff")]
 	public float speed = 6f;
-    public float jumpPower = 6f;
+	public float jumpPower = 6f;
+	public float gravity = 9.81f;
 
-     public bool mouseLock = true;
+	public bool mouseLock = true;
 
 	[Header("Advanced tweaks")]
 	public float turnSmoothSpeed = 0.1f;
 
 	private float turnSmoothVel;
+	private Vector3 velocity;
 
 
 	//Objects
@@ -40,6 +39,11 @@ public class PlayerControl : MonoBehaviour
 	//simple system to handle player input
 	void ControlHandler()
 	{
+		if (controller.isGrounded && velocity.y < 0)
+		{
+			velocity.y = -2f;
+		}
+
 		//gather axis movements
 		Vector3 inputAxis = new Vector3
 		(
@@ -61,18 +65,23 @@ public class PlayerControl : MonoBehaviour
 			controller.Move(moveDir.normalized * speed * Time.deltaTime);// this uses the direction the camera is facing in order to move forward
 		}
 
-        if (Input.GetKeyDown("escape"))
-        {
-            mouseLock = !mouseLock;
-        }
+		//handle gravity
+		velocity.y -= gravity * Time.deltaTime;
+		controller.Move(velocity * Time.deltaTime);
 
-        if (mouseLock == true)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
+		//unlock cursor when escape is pressed
+		if (Input.GetKeyDown("escape"))
+		{
+			mouseLock = !mouseLock;
+		}
+
+		if (mouseLock == true)
+		{
+			Cursor.lockState = CursorLockMode.Locked;
+		}
+		else
+		{
+			Cursor.lockState = CursorLockMode.None;
+		}
 	}
 }
