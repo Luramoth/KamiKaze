@@ -52,6 +52,12 @@ public class PlayerControl : MonoBehaviour
 			Input.GetAxisRaw("Vertical")
 		).normalized;
 
+		//make character jump if space is pressed
+		if (Input.GetButtonDown("Jump") && controller.isGrounded)
+		{
+			velocity.y = Mathf.Sqrt(jumpPower * -2.0f * -gravity);
+		}
+
 		//apply movements if input is detected
 		if (inputAxis.magnitude >= 0.1f)
 		{
@@ -70,7 +76,7 @@ public class PlayerControl : MonoBehaviour
 		controller.Move(velocity * Time.deltaTime);
 
 		//unlock cursor when escape is pressed
-		if (Input.GetKeyDown("escape"))
+		if (Input.GetButtonDown("Cancel"))
 		{
 			mouseLock = !mouseLock;
 		}
