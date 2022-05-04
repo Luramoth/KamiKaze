@@ -763,11 +763,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  jumpPower: 6
+  jumpPower: 3
   gravity: 19.62
   mouseLock: 1
+  isJumping: 0
   turnSmoothSpeed: 0.1
-  coyoteTimeFrames: 100
+  coyoteTimeFrames: 30
   controller: {fileID: 3257032158430268023}
   cam: {fileID: 3647893203743974893}
 --- !u!143 &3257032158430268023
