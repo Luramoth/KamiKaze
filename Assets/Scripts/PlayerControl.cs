@@ -16,11 +16,11 @@ public class PlayerControl : MonoBehaviour
 	//vars
 	[Header("Basic movement stuff")]
 	public float speed = 6f;
-	public float jumpPower = 6f;
+	public float jumpPower = 3f;
 	public float gravity = 19.62f;
 	public bool mouseLock = true;
-
 	public bool isJumping = false;
+	public bool hasDoubleJumped = false;
 
 	[Header("Advanced tweaks")]
 	public float turnSmoothSpeed = 0.1f;
@@ -62,6 +62,7 @@ public class PlayerControl : MonoBehaviour
 		if (controller.isGrounded)
 		{
 			isJumping = false;
+			hasDoubleJumped = false;
 			coyoteTime = false;
 		}
 
@@ -114,26 +115,35 @@ public class PlayerControl : MonoBehaviour
 		}
 		else
 		{
-			if (coyoteTimeAvailable(inputAxis))
+			if (hasDoubleJumped == false)
 			{
-				if (cTFrames == 0 && coyoteTime != true) // if the amount of frames is at 0 and coyote time hasent went through yet, set up starting frames
+				if (coyoteTimeAvailable(inputAxis))
 				{
-					cTFrames = coyoteTimeFrames;
-					coyoteTime = true;
+					if (cTFrames == 0 && coyoteTime != true) // if the amount of frames is at 0 and coyote time hasent went through yet, set up starting frames
+					{
+						cTFrames = coyoteTimeFrames;
+						coyoteTime = true;
 
-					return true;
+						return true;
+					}
+					else // else make it tso the player can jump mid air
+					{
+						cTFrames --;
+
+						return true;
+					}
 				}
-				else // else make it tso the player can jump mid air
+				else // if coyote time isent available then set frames to 0
 				{
-					cTFrames --;
+					cTFrames = 0;
+
+					hasDoubleJumped = true;
 
 					return true;
 				}
 			}
-			else // if coyote time isent available then set frames to 0
+			else
 			{
-				cTFrames = 0;
-
 				return false;
 			}
 		}
