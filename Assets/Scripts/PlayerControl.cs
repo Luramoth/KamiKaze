@@ -67,13 +67,14 @@ public class PlayerControl : MonoBehaviour
 		}
 
 		//make character jump if space is pressed
-		if (Input.GetButtonDown("Jump") && canJump(inputAxis))
+		if (Input.GetButtonDown("Jump")) 
 		{
-			velocity.y = Mathf.Sqrt(jumpPower * -2.0f * -gravity);
-
-			isJumping = true;
+			if (canJump(inputAxis)) 
+			{
+				velocity.y = Mathf.Sqrt(jumpPower * -2.0f * -gravity);
+				isJumping = true;
+			}
 		}
-
 		velocity.y -= gravity * Time.deltaTime; //handle gravity
 
 		//apply movements if input is detected
@@ -109,11 +110,11 @@ public class PlayerControl : MonoBehaviour
 
 	bool canJump(Vector3 inputAxis)
 	{
-		if (controller.isGrounded)
+		if (controller.isGrounded)// if the player is on the ground they cant possibly be on coyote time or double jumping so allow them to jump
 		{
 			return true;
 		}
-		else
+		else //  else check if they are double jumping or have coyote time
 		{
 			if (hasDoubleJumped == false)
 			{
@@ -133,7 +134,7 @@ public class PlayerControl : MonoBehaviour
 						return true;
 					}
 				}
-				else // if coyote time isent available then set frames to 0
+				else // if coyote time isent available then set frames to 0 and have the player double jump
 				{
 					cTFrames = 0;
 
@@ -160,7 +161,7 @@ public class PlayerControl : MonoBehaviour
 		{
 			if (inputAxis.magnitude >= 0.1f) // see if the player is moving forward at all, if not cancel coyote time
 			{
-				if (cTFrames <= 0 && coyoteTime)
+				if (cTFrames <= 0 && coyoteTime) // if player has run out of coyote time frames then cancel coyote time, else keep it going
 				{
 					return false;
 				}
