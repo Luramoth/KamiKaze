@@ -75,25 +75,6 @@ public class PlayerControl : MonoBehaviour
 
 		velocity.y -= gravity * Time.deltaTime; //handle gravity
 
-		if (coyoteTimeAvailable(inputAxis))
-		{
-			if (cTFrames == 0 && coyoteTime != true) // if the amount of frames is at 0 and coyote time hasent went through yet, set up starting frames
-			{
-				cTFrames = coyoteTimeFrames;
-				coyoteTime = true;
-			}
-			else // else make the player walk on the air for one frame
-			{
-				velocity = Vector3.zero;
-
-				cTFrames --;
-			}
-		}
-		else // if coyote time isent available then set frames to 0
-		{
-			cTFrames = 0;
-		}
-
 		//apply movements if input is detected
 		if (inputAxis.magnitude >= 0.1f)
 		{
@@ -125,7 +106,7 @@ public class PlayerControl : MonoBehaviour
 		}
 	}
 
-	bool canJump()
+/* 	bool canJump()
 	{
 		if (coyoteTimeAvailable(inputAxis))
 		{
@@ -172,5 +153,5 @@ public class PlayerControl : MonoBehaviour
 				return false;
 			}
 		}
-	}
+	} */
 }
