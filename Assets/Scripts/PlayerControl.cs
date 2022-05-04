@@ -14,12 +14,16 @@ public class PlayerControl : MonoBehaviour
 	[Header("Basic movement stuff")]
 	public float speed = 6f;
 	public float jumpPower = 6f;
-	public float gravity = 9.81f;
-
+	public float gravity = 19.62f;
 	public bool mouseLock = true;
+
+	public bool isJumping = false;
 
 	[Header("Advanced tweaks")]
 	public float turnSmoothSpeed = 0.1f;
+	public int coyoteTimeFrames = 100; 
+	private int cTFrames = 0;
+	private bool cTAvalable = false;
 
 	private float turnSmoothVel;
 	private Vector3 velocity;
@@ -56,6 +60,8 @@ public class PlayerControl : MonoBehaviour
 		if (Input.GetButtonDown("Jump") && controller.isGrounded)
 		{
 			velocity.y = Mathf.Sqrt(jumpPower * -2.0f * -gravity);
+
+			isJumping = true;
 		}
 
 		//apply movements if input is detected
@@ -73,7 +79,13 @@ public class PlayerControl : MonoBehaviour
 
 		//handle gravity
 		velocity.y -= gravity * Time.deltaTime;
+
 		controller.Move(velocity * Time.deltaTime);
+
+		if (controller.isGrounded)
+		{
+			isJumping = false;
+		}
 
 		//unlock cursor when escape is pressed
 		if (Input.GetButtonDown("Cancel"))
