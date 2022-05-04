@@ -8,7 +8,7 @@ using UnityEngine;
 	You should have received a copy of the GNU Affero General Public License along with Foobar. If not, see <https://www.gnu.org/licenses/agpl-3.0.html>.
 */
 
-// TODO: fix bug where player will float in air on slopes, possibly by making it so the palyer doesent float in the air and will instead be able to jump mid air for a few frames
+// TO/DO: fix bug where player will float in air on slopes, possibly by making it so the palyer doesent float in the air and will instead be able to jump mid air for a few frames
 // TODO: possibly add double jump?
 
 public class PlayerControl : MonoBehaviour
@@ -24,8 +24,8 @@ public class PlayerControl : MonoBehaviour
 
 	[Header("Advanced tweaks")]
 	public float turnSmoothSpeed = 0.1f;
-	private int coyoteTimeFrames = 100; 
-	public int cTFrames = 0;
+	public int coyoteTimeFrames = 30; 
+	private int cTFrames = 0;
 	private bool coyoteTime = false;
 
 	private float turnSmoothVel;
@@ -66,7 +66,7 @@ public class PlayerControl : MonoBehaviour
 		}
 
 		//make character jump if space is pressed
-		if (Input.GetButtonDown("Jump") && controller.isGrounded || Input.GetButtonDown("Jump") && coyoteTimeFrames > 0)
+		if (Input.GetButtonDown("Jump") && canJump(inputAxis))
 		{
 			velocity.y = Mathf.Sqrt(jumpPower * -2.0f * -gravity);
 
@@ -106,25 +106,36 @@ public class PlayerControl : MonoBehaviour
 		}
 	}
 
-/* 	bool canJump()
+	bool canJump(Vector3 inputAxis)
 	{
-		if (coyoteTimeAvailable(inputAxis))
+		if (controller.isGrounded)
 		{
-			if (cTFrames == 0 && coyoteTime != true) // if the amount of frames is at 0 and coyote time hasent went through yet, set up starting frames
-			{
-				cTFrames = coyoteTimeFrames;
-				coyoteTime = true;
-			}
-			else // else make it tso the player can jump mid air
-			{
-				cTFrames --;
-
-				return true;
-			}
+			return true;
 		}
-		else // if coyote time isent available then set frames to 0
+		else
 		{
-			cTFrames = 0;
+			if (coyoteTimeAvailable(inputAxis))
+			{
+				if (cTFrames == 0 && coyoteTime != true) // if the amount of frames is at 0 and coyote time hasent went through yet, set up starting frames
+				{
+					cTFrames = coyoteTimeFrames;
+					coyoteTime = true;
+
+					return true;
+				}
+				else // else make it tso the player can jump mid air
+				{
+					cTFrames --;
+
+					return true;
+				}
+			}
+			else // if coyote time isent available then set frames to 0
+			{
+				cTFrames = 0;
+
+				return false;
+			}
 		}
 	}
 
@@ -153,5 +164,5 @@ public class PlayerControl : MonoBehaviour
 				return false;
 			}
 		}
-	} */
+	}
 }
