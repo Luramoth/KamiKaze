@@ -8,6 +8,9 @@ using UnityEngine;
 	You should have received a copy of the GNU Affero General Public License along with Foobar. If not, see <https://www.gnu.org/licenses/agpl-3.0.html>.
 */
 
+// TODO: fix bug where player will float in air on slopes, possibly by making it so the palyer doesent float in the air and will instead be able to jump mid air for a few frames
+// TODO: possibly add double jump?
+
 public class PlayerControl : MonoBehaviour
 {
 	//vars
@@ -21,9 +24,9 @@ public class PlayerControl : MonoBehaviour
 
 	[Header("Advanced tweaks")]
 	public float turnSmoothSpeed = 0.1f;
-	public int coyoteTimeFrames = 100; 
-	private int cTFrames = 0;
-	private bool cTAvalable = false;
+	private int coyoteTimeFrames = 100; 
+	public int cTFrames = 0;
+	private bool coyoteTime = false;
 
 	private float turnSmoothVel;
 	private Vector3 velocity;
@@ -56,12 +59,39 @@ public class PlayerControl : MonoBehaviour
 			Input.GetAxisRaw("Vertical")
 		).normalized;
 
+		if (controller.isGrounded)
+		{
+			isJumping = false;
+			coyoteTime = false;
+		}
+
 		//make character jump if space is pressed
-		if (Input.GetButtonDown("Jump") && controller.isGrounded)
+		if (Input.GetButtonDown("Jump") && controller.isGrounded || Input.GetButtonDown("Jump") && coyoteTimeFrames > 0)
 		{
 			velocity.y = Mathf.Sqrt(jumpPower * -2.0f * -gravity);
 
 			isJumping = true;
+		}
+
+		velocity.y -= gravity * Time.deltaTime; //handle gravity
+
+		if (coyoteTimeAvailable(inputAxis))
+		{
+			if (cTFrames == 0 && coyoteTime != true) // if the amount of frames is at 0 and coyote time hasent went through yet, set up starting frames
+			{
+				cTFrames = coyoteTimeFrames;
+				coyoteTime = true;
+			}
+			else // else make the player walk on the air for one frame
+			{
+				velocity = Vector3.zero;
+
+				cTFrames --;
+			}
+		}
+		else // if coyote time isent available then set frames to 0
+		{
+			cTFrames = 0;
 		}
 
 		//apply movements if input is detected
@@ -77,15 +107,7 @@ public class PlayerControl : MonoBehaviour
 			controller.Move(moveDir.normalized * speed * Time.deltaTime);// this uses the direction the camera is facing in order to move forward
 		}
 
-		//handle gravity
-		velocity.y -= gravity * Time.deltaTime;
-
-		controller.Move(velocity * Time.deltaTime);
-
-		if (controller.isGrounded)
-		{
-			isJumping = false;
-		}
+		controller.Move(velocity * Time.deltaTime);// handle character vertical movement
 
 		//unlock cursor when escape is pressed
 		if (Input.GetButtonDown("Cancel"))
@@ -100,6 +122,55 @@ public class PlayerControl : MonoBehaviour
 		else
 		{
 			Cursor.lockState = CursorLockMode.None;
+		}
+	}
+
+	bool canJump()
+	{
+		if (coyoteTimeAvailable(inputAxis))
+		{
+			if (cTFrames == 0 && coyoteTime != true) // if the amount of frames is at 0 and coyote time hasent went through yet, set up starting frames
+			{
+				cTFrames = coyoteTimeFrames;
+				coyoteTime = true;
+			}
+			else // else make it tso the player can jump mid air
+			{
+				cTFrames --;
+
+				return true;
+			}
+		}
+		else // if coyote time isent available then set frames to 0
+		{
+			cTFrames = 0;
+		}
+	}
+
+	// function that checks if the player can utilize coyote time at all
+	bool coyoteTimeAvailable(Vector3 inputAxis)
+	{
+		if (controller.isGrounded || isJumping) // if the player is touching the ground or has already jumped, cancel coyote time
+		{
+			return false;
+		}
+		else
+		{
+			if (inputAxis.magnitude >= 0.1f) // see if the player is moving forward at all, if not cancel coyote time
+			{
+				if (cTFrames <= 0 && coyoteTime)
+				{
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
 }
