@@ -24,9 +24,6 @@ public class PlayerControl : MonoBehaviour
 
 	[Header("Advanced tweaks")]
 	public float turnSmoothSpeed = 0.1f;
-	public int coyoteTimeFrames = 30; 
-	public int cTFrames = 0;
-	public bool coyoteTime = false;
 
 	private float turnSmoothVel;
 	private Vector3 velocity;
@@ -63,7 +60,6 @@ public class PlayerControl : MonoBehaviour
 		{
 			isJumping = false;
 			hasDoubleJumped = false;
-			coyoteTime = false;
 		}
 
 		//make character jump if space is pressed
