@@ -28,7 +28,6 @@ public class PlayerControl : MonoBehaviour
 
 	[Header("Advanced tweaks")]
 
-	public float turnSmoothSpeed = 0.1f;
 	public int coyoteTimeFrames = 30; 
 	public int cTFrames = 0;
 	public bool coyoteTime = false;
