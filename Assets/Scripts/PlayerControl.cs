@@ -27,8 +27,12 @@ public class PlayerControl : MonoBehaviour
 	public bool hasDoubleJumped = false;
 
 	[Header("Advanced tweaks")]
-	public float turnSmoothSpeed = 0.1f;
 
+	public float turnSmoothSpeed = 0.1f;
+	public int coyoteTimeFrames = 30; 
+	public int cTFrames = 0;
+	public bool coyoteTime = false;
+	public float turnSmoothSpeed = 0.1f;
 	private float turnSmoothVel;
 	private Vector3 velocity;
 
@@ -84,7 +88,7 @@ public class PlayerControl : MonoBehaviour
 		//make character jump if space is pressed
 		if (Input.GetButtonDown("Jump")) 
 		{
-			if (canJump())
+			if (canJump(inputAxis))
 			{
 				velocity.y = Mathf.Sqrt(jumpPower * -2.0f * -gravity);
 
@@ -126,7 +130,7 @@ public class PlayerControl : MonoBehaviour
 		}
 	}
 
-	bool canJump()
+	bool canJump(Vector3 inputAxis)
 	{
 		if (controller.isGrounded)// if the player is on the ground they cant possibly be on coyote time or double jumping so allow them to jump
 		{
@@ -136,9 +140,57 @@ public class PlayerControl : MonoBehaviour
 		{
 			if (hasDoubleJumped == false)
 			{
-				hasDoubleJumped = true;
+				if (coyoteTimeAvailable(inputAxis))
+				{
+					if (cTFrames == 0 && coyoteTime != true) // if the amount of frames is at 0 and coyote time hasent went through yet, set up starting frames
+					{
+						cTFrames = coyoteTimeFrames;
+						coyoteTime = true;
 
-				return true;
+						return true;
+					}
+					else // else make it tso the player can jump mid air
+					{
+						cTFrames --;
+
+						return true;
+					}
+				}
+				else // if coyote time isent available then set frames to 0 and have the player double jump
+				{
+					cTFrames = 0;
+
+					hasDoubleJumped = true;
+
+					return true;
+				}
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+
+	// function that checks if the player can utilize coyote time at all
+	bool coyoteTimeAvailable(Vector3 inputAxis)
+	{
+		if (controller.isGrounded || isJumping) // if the player is touching the ground or has already jumped, cancel coyote time
+		{
+			return false;
+		}
+		else
+		{
+			if (inputAxis.magnitude >= 0.1f) // see if the player is moving forward at all, if not cancel coyote time
+			{
+				if (cTFrames <= 0 && coyoteTime) // if player has run out of coyote time frames then cancel coyote time, else keep it going
+				{
+					return false;
+				}
+				else
+				{
+					return true;
+				}
 			}
 			else
 			{
