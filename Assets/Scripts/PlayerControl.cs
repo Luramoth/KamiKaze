@@ -9,16 +9,20 @@ using UnityEngine;
 */
 
 // TO/DO: fix bug where player will float in air on slopes, possibly by making it so the palyer doesent float in the air and will instead be able to jump mid air for a few frames
-// TODO: possibly add double jump?
+// TO/DO: possibly add double jump?
+// TODO: add dash
+// TODO: add roll
 
 public class PlayerControl : MonoBehaviour
 {
 	//vars
 	[Header("Basic movement stuff")]
 	public float speed = 6f;
+	public float runSpeed = 10f;
 	public float jumpPower = 3f;
 	public float gravity = 19.62f;
 	public bool mouseLock = true;
+	public bool isRunning = false;
 	public bool isJumping = false;
 	public bool hasDoubleJumped = false;
 
@@ -43,9 +47,24 @@ public class PlayerControl : MonoBehaviour
 	//simple system to handle player input
 	void ControlHandler()
 	{
-		if (controller.isGrounded && velocity.y < 0)
+		float charSpeed;
+
+		if (controller.isGrounded && velocity.y < 0)// if the player is on the ground, slow the velocity
 		{
 			velocity.y = -2f;
+		}
+
+		if (Input.GetKey("left shift"))
+		{
+			charSpeed = runSpeed;
+
+			isRunning = true;
+		}
+		else
+		{
+			charSpeed = speed;
+
+			isRunning = false;
 		}
 
 		//gather axis movements
@@ -56,7 +75,7 @@ public class PlayerControl : MonoBehaviour
 			Input.GetAxisRaw("Vertical")
 		).normalized;
 
-		if (controller.isGrounded)
+		if (controller.isGrounded) // if the player is on the ground then reset jump and double jump
 		{
 			isJumping = false;
 			hasDoubleJumped = false;
@@ -68,10 +87,13 @@ public class PlayerControl : MonoBehaviour
 			if (canJump())
 			{
 				velocity.y = Mathf.Sqrt(jumpPower * -2.0f * -gravity);
+
 				isJumping = true;
 			}
 		}
+
 		velocity.y -= gravity * Time.deltaTime; //handle gravity
+
 
 		//apply movements if input is detected
 		if (inputAxis.magnitude >= 0.1f)
@@ -83,7 +105,7 @@ public class PlayerControl : MonoBehaviour
 
 			// move the player
 			Vector3 moveDir = Quaternion.Euler(0f,targetAngle,0f) * Vector3.forward; // this will take the current direction the camera is facing
-			controller.Move(moveDir.normalized * speed * Time.deltaTime);// this uses the direction the camera is facing in order to move forward
+			controller.Move(moveDir.normalized * charSpeed * Time.deltaTime);// this uses the direction the camera is facing in order to move forward
 		}
 
 		controller.Move(velocity * Time.deltaTime);// handle character vertical movement
@@ -94,7 +116,7 @@ public class PlayerControl : MonoBehaviour
 			mouseLock = !mouseLock;
 		}
 
-		if (mouseLock == true)
+		if (mouseLock == true) // if the cursor should be locked, lock it, if not, then dont
 		{
 			Cursor.lockState = CursorLockMode.Locked;
 		}
