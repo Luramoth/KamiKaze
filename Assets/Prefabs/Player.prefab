@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3647893203384578788}
-  m_LocalRotation: {x: 0.034946203, y: 0.000000013448514, z: -0.000000009548192, w: 0.99938923}
+  m_LocalRotation: {x: 0.034946203, y: 0.000000013448455, z: -0.000000009548151, w: 0.99938923}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -771,7 +771,6 @@ MonoBehaviour:
   isJumping: 0
   hasDoubleJumped: 0
   turnSmoothSpeed: 0.1
-  coyoteTimeFrames: 30
   controller: {fileID: 3912288999619708118}
   cam: {fileID: 3647893203743974893}
 --- !u!143 &3912288999619708118
@@ -1028,7 +1027,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3647893204872367832}
-  m_LocalRotation: {x: -0, y: -0.000000026169246, z: 0.000000015713837, w: 1}
+  m_LocalRotation: {x: -0, y: -8.4625484e-10, z: -5.745537e-16, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
