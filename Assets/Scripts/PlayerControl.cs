@@ -9,28 +9,20 @@ using UnityEngine;
 */
 
 // TO/DO: fix bug where player will float in air on slopes, possibly by making it so the palyer doesent float in the air and will instead be able to jump mid air for a few frames
-// TO/DO: possibly add double jump?
-// TODO: add dash
-// TODO: add roll
+// TODO: possibly add double jump?
 
 public class PlayerControl : MonoBehaviour
 {
 	//vars
 	[Header("Basic movement stuff")]
 	public float speed = 6f;
-	public float runSpeed = 10f;
 	public float jumpPower = 3f;
 	public float gravity = 19.62f;
 	public bool mouseLock = true;
-	public bool isRunning = false;
 	public bool isJumping = false;
 	public bool hasDoubleJumped = false;
 
 	[Header("Advanced tweaks")]
-
-	public int coyoteTimeFrames = 30; 
-	public int cTFrames = 0;
-	public bool coyoteTime = false;
 	public float turnSmoothSpeed = 0.1f;
 	private float turnSmoothVel;
 	private Vector3 velocity;
@@ -50,24 +42,9 @@ public class PlayerControl : MonoBehaviour
 	//simple system to handle player input
 	void ControlHandler()
 	{
-		float charSpeed;
-
-		if (controller.isGrounded && velocity.y < 0)// if the player is on the ground, slow the velocity
+		if (controller.isGrounded && velocity.y < 0)
 		{
 			velocity.y = -2f;
-		}
-
-		if (Input.GetKey("left shift"))
-		{
-			charSpeed = runSpeed;
-
-			isRunning = true;
-		}
-		else
-		{
-			charSpeed = speed;
-
-			isRunning = false;
 		}
 
 		//gather axis movements
@@ -78,7 +55,7 @@ public class PlayerControl : MonoBehaviour
 			Input.GetAxisRaw("Vertical")
 		).normalized;
 
-		if (controller.isGrounded) // if the player is on the ground then reset jump and double jump
+		if (controller.isGrounded)
 		{
 			isJumping = false;
 			hasDoubleJumped = false;
@@ -87,16 +64,13 @@ public class PlayerControl : MonoBehaviour
 		//make character jump if space is pressed
 		if (Input.GetButtonDown("Jump")) 
 		{
-			if (canJump(inputAxis))
+			if (canJump())
 			{
 				velocity.y = Mathf.Sqrt(jumpPower * -2.0f * -gravity);
-
 				isJumping = true;
 			}
 		}
-
 		velocity.y -= gravity * Time.deltaTime; //handle gravity
-
 
 		//apply movements if input is detected
 		if (inputAxis.magnitude >= 0.1f)
@@ -108,7 +82,7 @@ public class PlayerControl : MonoBehaviour
 
 			// move the player
 			Vector3 moveDir = Quaternion.Euler(0f,targetAngle,0f) * Vector3.forward; // this will take the current direction the camera is facing
-			controller.Move(moveDir.normalized * charSpeed * Time.deltaTime);// this uses the direction the camera is facing in order to move forward
+			controller.Move(moveDir.normalized * speed * Time.deltaTime);// this uses the direction the camera is facing in order to move forward
 		}
 
 		controller.Move(velocity * Time.deltaTime);// handle character vertical movement
@@ -119,7 +93,7 @@ public class PlayerControl : MonoBehaviour
 			mouseLock = !mouseLock;
 		}
 
-		if (mouseLock == true) // if the cursor should be locked, lock it, if not, then dont
+		if (mouseLock == true)
 		{
 			Cursor.lockState = CursorLockMode.Locked;
 		}
@@ -129,7 +103,7 @@ public class PlayerControl : MonoBehaviour
 		}
 	}
 
-	bool canJump(Vector3 inputAxis)
+	bool canJump()
 	{
 		if (controller.isGrounded)// if the player is on the ground they cant possibly be on coyote time or double jumping so allow them to jump
 		{
@@ -139,57 +113,9 @@ public class PlayerControl : MonoBehaviour
 		{
 			if (hasDoubleJumped == false)
 			{
-				if (coyoteTimeAvailable(inputAxis))
-				{
-					if (cTFrames == 0 && coyoteTime != true) // if the amount of frames is at 0 and coyote time hasent went through yet, set up starting frames
-					{
-						cTFrames = coyoteTimeFrames;
-						coyoteTime = true;
+				hasDoubleJumped = true;
 
-						return true;
-					}
-					else // else make it tso the player can jump mid air
-					{
-						cTFrames --;
-
-						return true;
-					}
-				}
-				else // if coyote time isent available then set frames to 0 and have the player double jump
-				{
-					cTFrames = 0;
-
-					hasDoubleJumped = true;
-
-					return true;
-				}
-			}
-			else
-			{
-				return false;
-			}
-		}
-	}
-
-	// function that checks if the player can utilize coyote time at all
-	bool coyoteTimeAvailable(Vector3 inputAxis)
-	{
-		if (controller.isGrounded || isJumping) // if the player is touching the ground or has already jumped, cancel coyote time
-		{
-			return false;
-		}
-		else
-		{
-			if (inputAxis.magnitude >= 0.1f) // see if the player is moving forward at all, if not cancel coyote time
-			{
-				if (cTFrames <= 0 && coyoteTime) // if player has run out of coyote time frames then cancel coyote time, else keep it going
-				{
-					return false;
-				}
-				else
-				{
-					return true;
-				}
+				return true;
 			}
 			else
 			{
