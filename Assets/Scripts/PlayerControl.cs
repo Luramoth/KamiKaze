@@ -13,12 +13,13 @@ using UnityEngine;
 // TODO: add dash
 // TODO: add roll
 // TODO: change movement system to state-based system
+// !WARNING: CODE IS NON-FUNCTIONAL
 
 public class PlayerControl : MonoBehaviour
 {
 	//vars
 	[Header("Basic movement stuff")]
-	public float walkspeed = 6f;
+	public float walkSpeed = 6f;
 	public float runSpeed = 10f;
 	public float jumpPower = 3f;
 	public float baseGravity = 19.62f;
@@ -42,7 +43,45 @@ public class PlayerControl : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		
+		switch(moveState)
+		{
+			case moveStates.walking:
+				if (Input.GetButtonDown("Jump"))
+				{
+					moveState = moveStates.jumping;
+				}
+				else if (Input.GetKey("left shift"))
+				{
+					moveState = moveStates.running;
+				}
+
+				basicGravity(baseGravity);
+				basicControl();
+				basicMove(walkSpeed);
+
+				break;
+			case moveStates.running:
+				if (Input.GetButtonDown("Jump"))
+				{
+					moveState = moveStates.jumping;
+				}
+				
+				if (!Input.GetKey("left shift"))
+				{
+					moveState = moveStates.running;
+				}
+
+				basicGravity(baseGravity);
+				basicControl();
+				basicMove(runSpeed);
+
+				break;
+			case moveStates.jumping:
+
+
+
+				break;
+		}
 	}
 
 	//simple system to handle player input
@@ -90,7 +129,7 @@ public class PlayerControl : MonoBehaviour
 		}
 	}
 
-	void basicMove(int speed)
+	void basicMove(float speed)
 	{
 		//gather axis movements
 		Vector3 inputAxis = new Vector3
@@ -116,7 +155,9 @@ public class PlayerControl : MonoBehaviour
 
 	void basicJump(float gravity)
 	{
-		if (controller.isGrounded)
+		
+		
+		/* if (controller.isGrounded)
 		{
 			isJumping = false;
 			hasDoubleJumped = false;
@@ -130,7 +171,7 @@ public class PlayerControl : MonoBehaviour
 				velocity.y = Mathf.Sqrt(jumpPower * -2.0f * -gravity);
 				isJumping = true;
 			}
-		}
+		} */
 	}
 
 	void basicGravity(float gravity)
