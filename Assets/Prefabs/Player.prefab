@@ -161,12 +161,12 @@ MonoBehaviour:
     FieldOfView: 70
     OrthographicSize: 10
     NearClipPlane: 0.1
-    FarClipPlane: 5000
+    FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.3333334, y: 1}
     Iso: 200
     ShutterSpeed: 0.005
     Aperture: 16
@@ -243,12 +243,12 @@ MonoBehaviour:
     FieldOfView: 70
     OrthographicSize: 10
     NearClipPlane: 0.1
-    FarClipPlane: 5000
+    FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.3333334, y: 1}
     Iso: 200
     ShutterSpeed: 0.005
     Aperture: 16
@@ -513,7 +513,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3647893203743974894}
-  m_LocalRotation: {x: 0.27413636, y: -0.000000028662022, z: 0.000000008169529, w: 0.96169084}
+  m_LocalRotation: {x: 0.27413636, y: 8.1383744e-10, z: 2.319886e-10, w: 0.96169084}
   m_LocalPosition: {x: 6.938894e-18, y: 3.7, z: -3.74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -545,7 +545,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 5000
+  far clip plane: 1000
   field of view: 70
   orthographic: 0
   orthographic size: 10
@@ -862,10 +862,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceda383812a7d70dc91b43b995db77ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
+  walkSpeed: 6
   runSpeed: 10
   jumpPower: 3
-  gravity: 19.62
+  baseGravity: 19.62
   mouseLock: 1
   isRunning: 0
   isJumping: 0
@@ -873,6 +873,7 @@ MonoBehaviour:
   turnSmoothSpeed: 0.1
   controller: {fileID: 3912288999619708118}
   cam: {fileID: 3647893203743974893}
+  moveState: 4
 --- !u!143 &3912288999619708118
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1082,12 +1083,12 @@ MonoBehaviour:
     FieldOfView: 70
     OrthographicSize: 10
     NearClipPlane: 0.1
-    FarClipPlane: 5000
+    FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.3333334, y: 1}
     Iso: 200
     ShutterSpeed: 0.005
     Aperture: 16
@@ -1127,7 +1128,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3647893204872367832}
-  m_LocalRotation: {x: -0, y: -0.000000026169246, z: 0.000000015713837, w: 1}
+  m_LocalRotation: {x: -0, y: -8.4625484e-10, z: -5.745537e-16, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1167,12 +1168,12 @@ MonoBehaviour:
     FieldOfView: 70
     OrthographicSize: 10
     NearClipPlane: 0.1
-    FarClipPlane: 5000
+    FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.3333334, y: 1}
     Iso: 200
     ShutterSpeed: 0.005
     Aperture: 16
