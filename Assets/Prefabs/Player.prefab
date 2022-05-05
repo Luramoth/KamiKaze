@@ -111,7 +111,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3647893203387576171}
   m_LocalRotation: {x: 0.27413636, y: 8.13837e-10, z: 2.3198969e-10, w: 0.96169084}
-  m_LocalPosition: {x: 0, y: 3.7, z: -3.74}
+  m_LocalPosition: {x: 6.938894e-18, y: 3.7, z: -3.74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -222,7 +222,7 @@ MonoBehaviour:
   m_SplineCurvature: 0.74
   m_Orbits:
   - m_Height: 5.98
-    m_Radius: 0.63
+    m_Radius: 1.4
   - m_Height: 3.7
     m_Radius: 3.74
   - m_Height: 0.7
@@ -765,9 +765,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
+  runSpeed: 10
   jumpPower: 3
   gravity: 19.62
   mouseLock: 1
+  isRunning: 0
   isJumping: 0
   hasDoubleJumped: 0
   turnSmoothSpeed: 0.1
