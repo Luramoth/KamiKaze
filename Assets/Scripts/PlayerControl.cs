@@ -14,7 +14,6 @@ using UnityEngine;
 // TODO: add roll
 // TODO: change movement system to state-based system
 // !WARNING: CODE IS NON-FUNCTIONAL
-// !WARNING: CODE IS PERFORMANCE INTENSIVE
 
 public class PlayerControl : MonoBehaviour
 {
