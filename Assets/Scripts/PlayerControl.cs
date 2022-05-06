@@ -12,8 +12,7 @@ using UnityEngine;
 // TO/DO: possibly add double jump?
 // TODO: add dash
 // TODO: add roll
-// TODO: change movement system to state-based system
-// !WARNING: CODE IS NON-FUNCTIONAL
+// TO/DO: change movement system to state-based system
 
 public class PlayerControl : MonoBehaviour
 {
@@ -24,9 +23,6 @@ public class PlayerControl : MonoBehaviour
 	public float jumpPower = 3f;
 	public float baseGravity = 19.62f;
 	public bool mouseLock = true;
-	public bool isRunning = false;
-	public bool isJumping = false;
-	public bool hasDoubleJumped = false;
 
 	[Header("Advanced tweaks")]
 	public float turnSmoothSpeed = 0.1f;
@@ -100,7 +96,7 @@ public class PlayerControl : MonoBehaviour
 
 				basicGravity(baseGravity);
 				basicControl();
-				basicMove(runSpeed);
+				basicMove(walkSpeed);
 				break;
 			case moveStates.doubleJumping:
 
@@ -116,7 +112,7 @@ public class PlayerControl : MonoBehaviour
 
 				basicGravity(baseGravity);
 				basicControl();
-				basicMove(runSpeed);
+				basicMove(walkSpeed);
 				break;
 			case moveStates.falling:
 
@@ -135,6 +131,8 @@ public class PlayerControl : MonoBehaviour
 				{
 					moveState = moveStates.walking;
 				}
+
+				basicGravity(baseGravity);
 				break;
 		}
 	}
@@ -160,27 +158,6 @@ public class PlayerControl : MonoBehaviour
 		else
 		{
 			Cursor.lockState = CursorLockMode.None;
-		}
-	}
-
-	bool canJump()
-	{
-		if (controller.isGrounded)// if the player is on the ground they cant possibly be on coyote time or double jumping so allow them to jump
-		{
-			return true;
-		}
-		else //  else check if they are double jumping or have coyote time
-		{
-			if (hasDoubleJumped == false)
-			{
-				hasDoubleJumped = true;
-
-				return true;
-			}
-			else
-			{
-				return false;
-			}
 		}
 	}
 
@@ -211,7 +188,6 @@ public class PlayerControl : MonoBehaviour
 	void basicJump(float gravity)
 	{
 		velocity.y = Mathf.Sqrt(jumpPower * -2.0f * -gravity);
-		isJumping = true;
 	}
 
 	void basicGravity(float gravity)
@@ -223,5 +199,7 @@ public class PlayerControl : MonoBehaviour
 	void dash()
 	{
 		Debug.LogError("dash!");
+
+		controller.enabled = false;
 	}
 }
