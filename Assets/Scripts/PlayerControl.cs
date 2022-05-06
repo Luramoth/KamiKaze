@@ -50,6 +50,7 @@ public class PlayerControl : MonoBehaviour
 				if (Input.GetButtonDown("Jump"))
 				{
 					moveState = moveStates.jumping;
+					basicJump(baseGravity);
 				}
 				
 				if (Input.GetKey("left shift"))
@@ -72,7 +73,7 @@ public class PlayerControl : MonoBehaviour
 				
 				if (!Input.GetKey("left shift"))
 				{
-					moveState = moveStates.running;
+					moveState = moveStates.walking;
 				}
 
 				basicGravity(baseGravity);
@@ -87,7 +88,7 @@ public class PlayerControl : MonoBehaviour
 					moveState = moveStates.doubleJumping;
 					basicJump(baseGravity);
 				}
-				if (!Input.GetKey("left shift"))
+				if (Input.GetKey("left shift"))
 				{
 					moveState = moveStates.dashing;
 					dash();
@@ -103,7 +104,7 @@ public class PlayerControl : MonoBehaviour
 				break;
 			case moveStates.doubleJumping:
 
-				if (!Input.GetKey("left shift"))
+				if (Input.GetKey("left shift"))
 				{
 					moveState = moveStates.dashing;
 					dash();
