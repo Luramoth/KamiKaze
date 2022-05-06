@@ -14,6 +14,7 @@ using UnityEngine;
 // TODO: add roll
 // TODO: change movement system to state-based system
 // !WARNING: CODE IS NON-FUNCTIONAL
+// !WARNING: CODE IS PERFORMANCE INTENSIVE
 
 public class PlayerControl : MonoBehaviour
 {
@@ -37,7 +38,7 @@ public class PlayerControl : MonoBehaviour
 	public CharacterController controller;
 	public Transform cam;
 
-	public enum moveStates {walking,running,jumping,doubleJumping,falling};
+	public enum moveStates {walking,running,jumping,doubleJumping,falling,dashing};
 	public moveStates moveState = moveStates.falling;
 
 	// Update is called once per frame
@@ -46,6 +47,7 @@ public class PlayerControl : MonoBehaviour
 		switch(moveState)
 		{
 			case moveStates.walking:
+
 				if (Input.GetButtonDown("Jump"))
 				{
 					moveState = moveStates.jumping;
@@ -61,9 +63,11 @@ public class PlayerControl : MonoBehaviour
 
 				break;
 			case moveStates.running:
+
 				if (Input.GetButtonDown("Jump"))
 				{
-					moveState = moveStates.jumping;
+					moveState = moveStates.dashing;
+					dash();
 				}
 				
 				if (!Input.GetKey("left shift"))
@@ -78,8 +82,58 @@ public class PlayerControl : MonoBehaviour
 				break;
 			case moveStates.jumping:
 
+				if (Input.GetButtonDown("Jump"))
+				{
+					moveState = moveStates.doubleJumping;
+					basicJump(baseGravity);
+				}
+				if (!Input.GetKey("left shift"))
+				{
+					moveState = moveStates.dashing;
+					dash();
+				}
+				if (controller.isGrounded)
+				{
+					moveState = moveStates.walking;
+				}
 
+				basicGravity(baseGravity);
+				basicControl();
+				basicMove(runSpeed);
+				break;
+			case moveStates.doubleJumping:
 
+				if (!Input.GetKey("left shift"))
+				{
+					moveState = moveStates.dashing;
+					dash();
+				}
+				if (controller.isGrounded)
+				{
+					moveState = moveStates.walking;
+				}
+
+				basicGravity(baseGravity);
+				basicControl();
+				basicMove(runSpeed);
+				break;
+			case moveStates.falling:
+
+				if (controller.isGrounded)
+				{
+					moveState = moveStates.walking;
+				}
+
+				basicGravity(baseGravity);
+				basicControl();
+				basicMove(walkSpeed);
+				break;
+			case moveStates.dashing:
+
+				if (controller.isGrounded)
+				{
+					moveState = moveStates.walking;
+				}
 				break;
 		}
 	}
@@ -155,28 +209,18 @@ public class PlayerControl : MonoBehaviour
 
 	void basicJump(float gravity)
 	{
-		
-		
-		/* if (controller.isGrounded)
-		{
-			isJumping = false;
-			hasDoubleJumped = false;
-		}
-
-		//make character jump if space is pressed
-		if (Input.GetButtonDown("Jump")) 
-		{
-			if (canJump())
-			{
-				velocity.y = Mathf.Sqrt(jumpPower * -2.0f * -gravity);
-				isJumping = true;
-			}
-		} */
+		velocity.y = Mathf.Sqrt(jumpPower * -2.0f * -gravity);
+		isJumping = true;
 	}
 
 	void basicGravity(float gravity)
 	{
 		velocity.y -= gravity * Time.deltaTime; //handle gravity
 		controller.Move(velocity * Time.deltaTime);// handle character vertical movement
+	}
+
+	void dash()
+	{
+		Debug.LogError("dash!");
 	}
 }
