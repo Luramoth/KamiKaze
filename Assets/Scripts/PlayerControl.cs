@@ -51,7 +51,8 @@ public class PlayerControl : MonoBehaviour
 				{
 					moveState = moveStates.jumping;
 				}
-				else if (Input.GetKey("left shift"))
+				
+				if (Input.GetKey("left shift"))
 				{
 					moveState = moveStates.running;
 				}
