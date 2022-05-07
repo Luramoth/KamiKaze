@@ -32,6 +32,7 @@ public class PlayerControl : MonoBehaviour
 	[Header("References")]
 	public CharacterController controller;
 	public Transform cam;
+	public GameObject sphere;
 
 	public enum moveStates {walking,running,jumping,doubleJumping,falling,dashing};
 	public moveStates moveState = moveStates.falling;
