@@ -42,7 +42,7 @@ public class PlayerControl : MonoBehaviour
 	{
 		switch(moveState)
 		{
-			case moveStates.walking:
+			case moveStates.walking: // state where the player is on the ground at base speed
 
 				if (Input.GetButtonDown("Jump"))
 				{
@@ -60,7 +60,7 @@ public class PlayerControl : MonoBehaviour
 				basicMove(walkSpeed);
 
 				break;
-			case moveStates.running:
+			case moveStates.running: // state where the player is on the ground at running speed
 
 				if (Input.GetButtonDown("Jump"))
 				{
@@ -78,7 +78,7 @@ public class PlayerControl : MonoBehaviour
 				basicMove(runSpeed);
 
 				break;
-			case moveStates.jumping:
+			case moveStates.jumping: // state where the player is jumping
 
 				if (Input.GetButtonDown("Jump"))
 				{
@@ -99,7 +99,7 @@ public class PlayerControl : MonoBehaviour
 				basicControl();
 				basicMove(walkSpeed);
 				break;
-			case moveStates.doubleJumping:
+			case moveStates.doubleJumping: // state where the player is making a second jump
 
 				if (Input.GetKey("left shift"))
 				{
@@ -115,7 +115,7 @@ public class PlayerControl : MonoBehaviour
 				basicControl();
 				basicMove(walkSpeed);
 				break;
-			case moveStates.falling:
+			case moveStates.falling: // state where the player is falling
 
 				if (controller.isGrounded)
 				{
@@ -126,7 +126,7 @@ public class PlayerControl : MonoBehaviour
 				basicControl();
 				basicMove(walkSpeed);
 				break;
-			case moveStates.dashing:
+			case moveStates.dashing: // state where the player is dashing forward into a roll
 
 				if (controller.isGrounded)
 				{
@@ -162,6 +162,7 @@ public class PlayerControl : MonoBehaviour
 		}
 	}
 
+	// function that has the player gain basic movement controlls with WASD
 	void basicMove(float speed)
 	{
 		//gather axis movements
@@ -186,17 +187,20 @@ public class PlayerControl : MonoBehaviour
 		}
 	}
 
+	// function where it makes the player jump on input
 	void basicJump(float gravity)
 	{
 		velocity.y = Mathf.Sqrt(jumpPower * -2.0f * -gravity);
 	}
 
+	// function that gives the player gravity using the player controller's move() function
 	void basicGravity(float gravity)
 	{
 		velocity.y -= gravity * Time.deltaTime; //handle gravity
 		controller.Move(velocity * Time.deltaTime);// handle character vertical movement
 	}
 
+	// function that contains all of the logic for dashing
 	void dash()
 	{
 		Debug.LogError("dash!");
